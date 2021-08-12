@@ -19,7 +19,10 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	mux, err := gateway.New(ctx, "https://httpbin.org/get", "p")
+	params := []string{"1", "2"}
+	domains := []string{"https://enokceyl2qythqw.m.pipedream.net", "https://httpbin.org/get"}
+
+	mux, err := gateway.New(ctx, params, domains)
 	if err != nil {
 		log.Printf("Setting up the gateway: %s", err.Error())
 		return

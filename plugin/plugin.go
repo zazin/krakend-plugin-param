@@ -28,7 +28,7 @@ func (r registerer) RegisterClients(f func(
 		if cfg.name != string(r) {
 			return nil, fmt.Errorf("unknown register %s", cfg.name)
 		}
-		return gateway.New(ctx, cfg.host, cfg.param)
+		return gateway.New(ctx, cfg.params, cfg.domains)
 	})
 }
 
@@ -38,29 +38,43 @@ func parse(extra map[string]interface{}) *opts {
 		return nil
 	}
 
-	host, ok := extra["host"].(string)
+	rawParams, ok := extra["params"]
 	if !ok {
 		return nil
 	}
+	pr, ok := rawParams.([]interface{})
+	if !ok || len(pr) < 2 {
+		return nil
+	}
+	params := make([]string, len(pr))
+	for i, e := range pr {
+		params[i] = e.(string)
+	}
 
-	param, ok := extra["param"].(string)
+	rawDomain, ok := extra["domains"]
 	if !ok {
 		return nil
+	}
+	dm, ok := rawDomain.([]interface{})
+	if !ok || len(dm) < 2 {
+		return nil
+	}
+	domains := make([]string, len(dm))
+	for i, e := range dm {
+		domains[i] = e.(string)
 	}
 
 	return &opts{
-		name:  name,
-		host:  host,
-		param: param,
+		name:    name,
+		params:  params,
+		domains: domains,
 	}
 }
 
 type opts struct {
-	name  string
-	host  string
-	param string
+	name    string
+	params  []string
+	domains []string
 }
 
-func main() {
-
-}
+func main() {}

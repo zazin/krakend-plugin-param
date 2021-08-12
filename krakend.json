@@ -18,6 +18,9 @@
       "endpoint": "/test",
       "method": "GET",
       "extra_config": {},
+      "querystring_params": [
+        "param"
+      ],
       "output_encoding": "json",
       "concurrent_calls": 1,
       "backend": [
@@ -27,7 +30,7 @@
           "encoding": "json",
           "sd": "static",
           "host": [
-            "https://enokceyl2qythqw.m.pipedream.net"
+            "http://ignore.this"
           ],
           "disable_host_sanitize": false,
           "is_collection": false,
@@ -36,8 +39,14 @@
           "extra_config": {
             "github.com/devopsfaith/krakend/transport/http/client/executor": {
               "name": "test-plugin",
-              "host": "https://enokceyl2qythqw.m.pipedream.net",
-              "param": "params"
+              "params": [
+                "1",
+                "2"
+              ],
+              "domains": [
+                "https://enokceyl2qythqw.m.pipedream.net",
+                "https://httpbin.org/get"
+              ]
             }
           }
         }
